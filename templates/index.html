@@ -1,0 +1,67 @@
+<html>
+<head>
+    <title>
+        Data Analysis Tool
+    </title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename = 'assets/favicon/favicon.ico')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/style/style.css')}}">
+</head>
+<body>
+    <div class = "sidebar" id="sidebar">
+        
+            {% if mode == True: %}
+            
+            <div class="center">
+            <form method="post" action="/text">
+                <input type="submit" name="TextMode" value="Chat with Data">
+            </form>
+            </div>
+            {% endif %}
+            {% if mode == False: %}
+            <div class = "center">
+            <form method="post" action="/visualization">
+                <input type="submit" name="VisualizationMode" value="Move to Visualization">
+            </form>
+            </div>
+            {% endif %}
+        <img id="logo" src="{{ url_for('static', filename='assets/imgs/SGA.jpg')}}">
+    </div>
+    <div class ="content" id="content">
+        <div>       
+            <h1>Data Analysis Tool</h1>
+        </div>
+        <div class="scrollable-content" id="scrollable-content">
+            <div class="history" id="chat-history">
+                {% for message in messages %}
+                <div class="message" id = "user">
+                    <div class="icon-box">
+                        <img src="{{url_for('static', filename='assets/imgs/user.png')}}"> <!-- Add user message here -->
+                    </div>
+                    
+                    <div class="text-body">
+                        {{ message['user'] }}
+                    </div>
+                </div>
+                
+                <div class="message" id = "bot">
+                    <div class="icon-box">
+                        <img src="{{ url_for('static', filename='assets/imgs/bot.png') }}""> <!-- Add bot message here -->
+                    </div>
+                    <div class="text-body">
+                        {{ message['bot'] | safe }} <!-- This is actually unsafe and only viable for demo projects -->
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="query-wrapper" id ="chatbox">
+            <form id="message-form">
+                <textarea name="query" id="query" rows="2" placeholder="Enter your query here."></textarea>
+            </form>
+        </div>
+    </div>
+    <!-- Scripts after loading content -->
+    <script src="{{ url_for('static', filename='/javascript/resize-textarea.js') }}"></script>
+    <script src="{{ url_for('static', filename='/javascript/submit-textarea.js') }}"></script>
+</body>
+</html>

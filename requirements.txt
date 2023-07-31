@@ -1,0 +1,8 @@
+langchain
+pandas
+Flask
+flask_restful
+langchain
+openai
+matplotlib
+mpld3
